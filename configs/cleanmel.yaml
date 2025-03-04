@@ -1,0 +1,76 @@
+seed_everything: 2
+trainer:
+  gradient_clip_val: 10
+  gradient_clip_algorithm: norm
+  devices: null
+  accelerator: gpu
+  strategy: ddp_find_unused_parameters_false
+  sync_batchnorm: false
+  precision: 32
+  num_sanity_val_steps: 3
+  deterministic: true
+
+model:
+  arch:
+    class_path: models.arch.CleanMel_mamba.CleanMel
+    init_args:
+      dim_input: 2
+      dim_output: 1
+      num_freqs: 257
+      num_layers: 8
+      encoder_kernel_size: 5
+      dim_hidden: 96
+      dim_ffn: 192
+      num_heads: 4
+      num_mel_freq: 80
+      layer_mel_freq: 1
+      dropout: [0, 0, 0]
+      kernel_size: [5, 3]
+      conv_groups: [8, 8]
+      norms: ["LN", "LN", "GN", "LN", "LN", "LN"]
+      dim_squeeze: 8
+      # num_freqs: 257
+      full_share: 1 # set to 9999 to not share the full-band module, which will increase the model performance with the cost of larger parameter size.
+      attention: mamba(16,4) # mhsa(251)/ret(2)/mamba(16,4)
+      decay: [4, 5, 9, 10]
+      rope: false
+  stft:
+    class_path: models.io.train_mel_cleanmel.TrainMel
+    init_args:
+      sample_rate: 16000
+      n_fft: 512
+      n_win: 512
+      n_hop: 256
+      n_mels: 80
+      f_min: 0
+      f_max: 8000
+      power: null
+      center: true
+      normalize: false
+      onesided: true
+      mel_norm: null
+      mel_scale: "htk"
+      hidden_dim: 96
+      in_dim: 96
+  target_stft:
+    class_path: models.io.mel.MelSpec
+    init_args:
+      sample_rate: 16000
+      n_fft: 512
+      n_win: 512
+      n_hop: 128
+      n_mels: 80
+      f_min: 0
+      f_max: 8000
+      power: 1
+      center: true
+      normalize: false
+      onesided: true
+      mel_norm: null
+      mel_scale: "htk"
+      librosa_mel: False
+  optimizer: [AdamW, { lr: 0.001, weight_decay: 0.001}]
+  lr_scheduler: [ExponentialLR, { gamma: 0.99 }]
+  exp_name: exp
+  metrics: [DNSMOS]
+  log_eps: 1e-7
