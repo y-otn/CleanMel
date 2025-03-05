@@ -105,8 +105,8 @@ class CleanMelLayer(nn.Module):
             dim_squeeze: int,
             num_freqs: int,
             dropout: Tuple[float, float, float] = (0, 0, 0),
-            kernel_size: Tuple[int, int] = (5, 3),
-            conv_groups: Tuple[int, int] = (8, 8),
+            f_kernel_size: int = 5,
+            f_conv_groups: int = 8,
             padding: str = 'zeros',
             full: nn.Module = None,
             mamba_state: int = None,
@@ -115,9 +115,6 @@ class CleanMelLayer(nn.Module):
     ) -> None:
         super().__init__()
         self.online = online
-        f_conv_groups = conv_groups[0]
-        f_kernel_size = kernel_size[0]
-
         # cross-band block
         # frequency-convolutional module
         self.fconv1 = nn.ModuleList([
@@ -152,15 +149,6 @@ class CleanMelLayer(nn.Module):
         self.dropout_mamba = nn.Dropout(dropout[0])
 
     def forward(self, x: Tensor, inference: bool = False) -> Tensor:
-        r"""
-        Args:
-            x: shape [B, F, T, H]
-            att_mask: the mask for attention along T. shape [B, T, T]
-
-        Shape:
-            out: shape [B, F, T, H]
-        """
- 
         x = x + self._fconv(self.fconv1, x)
         x = x + self._full(x)
         x = x + self._fconv(self.fconv2, x)        
@@ -170,7 +158,6 @@ class CleanMelLayer(nn.Module):
             x_fw = x + self._mamba(x, self.mamba[0], self.norm_mamba, self.dropout_mamba, inference)
             x_bw = x.flip(dims=[2]) + self._mamba(x.flip(dims=[2]), self.mamba[1], self.norm_mamba, self.dropout_mamba, inference)
             x = (x_fw + x_bw.flip(dims=[2])) / 2 
-
         return x
 
     def _mamba(self, x: Tensor, mamba: Mamba, norm: nn.Module, dropout: nn.Module, inference: bool = False):
@@ -231,12 +218,12 @@ class CleanMel(nn.Module):
         num_layers: int,
         num_freqs: int,
         num_mels: int = 80,
-        layer_mel_freq: int = 1,
+        layer_linear_freq: int = 1,
         encoder_kernel_size: int = 5,
         dim_hidden: int = 192,
         dropout: Tuple[float, float, float] = (0, 0, 0),
-        kernel_size: Tuple[int, int] = (5, 3),
-        conv_groups: Tuple[int, int] = (8, 8),
+        f_kernel_size: int = 5,
+        f_conv_groups: int = 8,
         padding: str = 'zeros',
         mamba_state: int = 16,
         mamba_conv_kernel: int = 4,
@@ -244,7 +231,7 @@ class CleanMel(nn.Module):
         _mel_options: Dict[str, Any] = None,
     ):
         super().__init__()
-        self.layer_mel_freq = layer_mel_freq
+        self.layer_linear_freq = layer_linear_freq
 
         # encoder
         self.encoder = CausalConv1d(in_channels=dim_input, out_channels=dim_hidden, kernel_size=encoder_kernel_size, look_ahead=0)
@@ -254,13 +241,13 @@ class CleanMel(nn.Module):
         for l in range(num_layers):
             layer = CleanMelLayer(
                 dim_hidden=dim_hidden,
-                dim_squeeze=8 if l < layer_mel_freq else dim_hidden,
-                num_freqs=num_freqs if l < layer_mel_freq else num_mels,
+                dim_squeeze=8 if l < layer_linear_freq else dim_hidden,
+                num_freqs=num_freqs if l < layer_linear_freq else num_mels,
                 dropout=dropout,
-                kernel_size=kernel_size,
-                conv_groups=conv_groups,
+                f_kernel_size=f_kernel_size,
+                f_conv_groups=f_conv_groups,
                 padding=padding,
-                full=full if l > layer_mel_freq else None,
+                full=full if l > layer_linear_freq else None,
                 online=online,
                 mamba_conv_kernel=mamba_conv_kernel,
                 mamba_state=mamba_state,    
@@ -283,16 +270,16 @@ class CleanMel(nn.Module):
         H = x.shape[2]
         x = x.reshape(B, F, T, H)
         # First Cross-Narrow band block in Linear Frequency
-        for i in range(self.layer_mel_freq):
+        for i in range(self.layer_linear_freq):
             m = self.layers[i]
-            x = m(x, inference)
+            x = m(x, inference).contiguous()
         
         # Mel-filterbank
         x = torch.einsum("bfth,fm->bmth", x, self.linear2mel)
 
-        for i in range(self.layer_mel_freq, len(self.layers)):
+        for i in range(self.layer_linear_freq, len(self.layers)):
             m = self.layers[i]
-            x = m(x, inference)
+            x = m(x, inference).contiguous()
         
         y = self.decoder(x)
         return y.contiguous()
@@ -368,9 +355,9 @@ if __name__ == '__main__':
         dim_output=1,
         num_layers=depth,
         dim_hidden=hidden,
-        layer_mel_freq=1,
-        kernel_size=(5, 3),
-        conv_groups=(8, 8),
+        layer_linear_freq=1,
+        f_kernel_size=5,
+        f_conv_groups=8,
         num_freqs=257,
         mamba_state=16,
         mamba_conv_kernel=4,
@@ -393,10 +380,13 @@ if __name__ == '__main__':
     # y_hat is the enhanced log-mel spectrogram
     y_hat = y_hat[0].cpu().detach().numpy()
     
+    # sanity check
+    if wavname == "noisy_CHIME-real_F05_442C020S_STR_REAL":
+        assert np.allclose(y_hat, np.load("./src/inference/check_CHIME-real_F05_442C020S_STR_REAL.npy"), atol=1e-5)
+    
     # plot the enhanced mel spectrogram
     noisy_mel = target_mel(torch.tensor(noisy).unsqueeze(0).float())
-    noisy_mel = torch.log(noisy_mel.clamp(min=1e-5))[0].cpu().detach().numpy()
-    
+    noisy_mel = torch.log(noisy_mel.clamp(min=1e-5))[0].cpu().detach().numpy()    
     vmax = math.log(1e2)
     vmin = math.log(1e-5)
     plt.figure(figsize=(8, 4))
