@@ -14,23 +14,29 @@ Pytorch implementation of "CleanMel: Mel-Spectrogram Enhancement for Improving B
 
 
 ## Getting Started
-**Step 1. Pretrained checkpoint:** Download the [pretrained checkpoints](https://drive.google.com/file/d/13Q0995DmOLMQWP-8MkUUV9bJtUywBzCy/view?usp=drive_link) here (Google drive).
+**Step 1. Pretrained checkpoint:** 
 
-**Step 2. Environment configurations:** You might need to create a new conda environment to run CleanMel, to do so:
+Download the [pretrained checkpoints](https://drive.google.com/file/d/13Q0995DmOLMQWP-8MkUUV9bJtUywBzCy/view?usp=drive_link) here (Google drive).
+
+**Step 2. Environment configurations:** 
+
+Create a new conda environment for CleanMel:
 
 ```
 conda create -n CleanMel python==3.10.14
 ```
-To setup the required packages:
+Setup the required packages:
 ```
 pip install -r requirements.txt
 ```
-Hint: If you have any problem w.r.t. the environments. Please first make sure your `mamba_ssm`, `torch` and `pytorch-lightning` versions are identical to those in the `requirements.txt`.
+<font color=gray> Hint: If you have any problem w.r.t. the environments. Please first make sure your `mamba_ssm`, `torch` and `pytorch-lightning` versions are identical to those in the `requirements.txt`.</font>
 
 ## Inference
 **Change pretrained checkpoint path:**
 
-In `./shell/inference.sh`, change the `model.arch_ckpt` to `YOUR_PATH/CleanMel_S_L1.ckpt` and `model.vocos_ckpt` to `YOUR_PATH/vocos_offline.pt`.
+In `./shell/inference.sh`: 
+1. change the `model.arch_ckpt` to `YOUR_PATH/CleanMel_S_L1.ckpt` 
+2. change the `model.vocos_ckpt` to `YOUR_PATH/vocos_offline.pt`.
 
 **Inference provided demos:** 
 
@@ -39,15 +45,19 @@ Using the `inference.sh` in `shell` folder:
 cd shell
 bash inference 0,
 ```
-Hint: the number behind indicates your GPU ID. `0,` means using only `GPU:0` for inference. And change it value to `0,1,...` to allow more `GPUS` for inference.
+<font color=gray>Hint: the number behind indicates your GPU ID. `0,` means using only `GPU:0` for inference. And change it value to `0,1,...` to allow more `GPUS` for inference.</font>
 
 **Inference your own file:** 
 
-In `inference.sh`, change the `dataset.speech_dir` to your raw waveforms and and `model.output_path` direct to your output folder. Run 
+In `inference.sh`:
+1. change `dataset.speech_dir` to your data path.
+2. change `model.output_path` to your output folder. 
+
+Run 
 ```
 bash inference 0,
 ```
-You could also delete `model.output_path`, by default, the waveform will output to the same folder of your pretrained checkpoint.
+<font color=gray>Hint: You could also delete `model.output_path`, by default, the waveform will output to the same folder of your pretrained checkpoint.</font>
 
 ## Training
 
