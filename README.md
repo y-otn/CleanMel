@@ -38,6 +38,8 @@ In `./shell/inference.sh`:
 1. change the `model.arch_ckpt` to `YOUR_PATH/CleanMel_S_L1.ckpt` 
 2. change the `model.vocos_ckpt` to `YOUR_PATH/vocos_offline.pt`.
 
+---
+
 **Inference provided demos:** 
 
 Using the `inference.sh` in `shell` folder:
@@ -45,7 +47,9 @@ Using the `inference.sh` in `shell` folder:
 cd shell
 bash inference 0,
 ```
-<font color=gray>Hint: the number behind indicates your GPU ID. `0,` means using only `GPU:0` for inference. And change it value to `0,1,...` to allow more `GPUS` for inference.</font>
+<font color=gray, size=1>Hint: the number behind indicates your GPU ID. `0,` means using only `GPU:0` for inference. And change it value to `0,1,...` to allow more `GPUS` for inference.</font>
+
+---
 
 **Inference your own file:** 
 
@@ -57,7 +61,7 @@ Run
 ```
 bash inference 0,
 ```
-<font color=gray>Hint: You could also delete `model.output_path`, by default, the waveform will output to the same folder of your pretrained checkpoint.</font>
+<font color=gray, size=1>Hint: You could also delete `model.output_path`, by default, the waveform will output to the same folder of your pretrained checkpoint.</font>
 
 ## Training
 
