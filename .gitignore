@@ -173,3 +173,5 @@ cython_debug/
 
 # Pretrained checkpoints
 pretrained/
+dataset/
+logs/

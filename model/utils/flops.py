@@ -169,9 +169,9 @@ def write_FLOPs(model: LightningModule, save_dir: str, num_chns: int, fs: int = 
     if model_class_path is None:
         model_class_path = f"{str(model.__class__.__module__)}.{type(model).__name__}"
     if fs:
-        cmd = f'CUDA_VISIBLE_DEVICES={model.device.index}, python -m models.utils.flops ' + f'--save_dir {save_dir} --model_class_path {model_class_path} ' + f'--num_chns {num_chns} --fs {fs} --audio_time_len {audio_time_len}'
+        cmd = f'CUDA_VISIBLE_DEVICES={model.device.index}, python -m model.utils.flops ' + f'--save_dir {save_dir} --model_class_path {model_class_path} ' + f'--num_chns {num_chns} --fs {fs} --audio_time_len {audio_time_len}'
     else:
-        cmd = f'CUDA_VISIBLE_DEVICES={model.device.index}, python -m models.utils.flops ' + f'--save_dir {save_dir} --model_class_path {model_class_path} ' + f'--num_chns {num_chns} --nfft {nfft} --audio_time_len {audio_time_len}'
+        cmd = f'CUDA_VISIBLE_DEVICES={model.device.index}, python -m model.utils.flops ' + f'--save_dir {save_dir} --model_class_path {model_class_path} ' + f'--num_chns {num_chns} --nfft {nfft} --audio_time_len {audio_time_len}'
     print(cmd)
     os.system(cmd)
 

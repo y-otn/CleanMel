@@ -27,7 +27,7 @@ warnings.filterwarnings("ignore", category=DeprecationWarning)
 
 class TrainModule(pl.LightningModule):
     name: str 
-    import_path: str = 'models.CleanMelTrainer_L1.TrainModule'
+    import_path: str = 'model.CleanMelTrainer_mapping.TrainModule'
 
     def __init__(
         self,
@@ -48,11 +48,11 @@ class TrainModule(pl.LightningModule):
         exp_name: str = "exp",
         log_eps=1e-5,
         metrics: List[str] = ['SDR', 'SI_SDR', 'NB_PESQ', 'WB_PESQ', 'eSTOI'],
-        online = False,
+        output_path: Optional[str] = None, # use only for inference
         arch_ckpt: Optional[str] = None,
         vocos_ckpt: Optional[str] = None,
         vocos_config: Optional[str] = None,
-        output_path: Optional[str] = None # inference output dir
+        online = False,
     ):
         super().__init__()
 
@@ -65,9 +65,11 @@ class TrainModule(pl.LightningModule):
         
         self.name = self.exp_name
         
-        # Load pretrained models in inference
+        # Load pretrained models
+        # CleanMel
         if arch_ckpt is not None:
-            self.arch.load_state_dict(torch.load(arch_ckpt, map_location='cpu'), strict=True)     
+            self.arch.load_state_dict(torch.load(arch_ckpt, map_location='cpu'), strict=True)
+        # Vocos
         if vocos_config is not None:
             if online:
                 from model.vocos.online.pretrained import Vocos
@@ -75,13 +77,14 @@ class TrainModule(pl.LightningModule):
                 from model.vocos.offline.pretrained import Vocos
             self.vocos = Vocos.from_hparams(config_path=vocos_config)
             self.vocos = Vocos.from_pretrained(None, model_path=vocos_ckpt, model=self.vocos)
+            self.vocos.requires_grad_(False)
     
         self.val_cpu_metric_input = []
         self.val_wavs = []
         self.test_wavs = []
         self.sample_rate = self.target_stft.sample_rate
-        self.online = arch.online
-            
+        self.online = arch.online  
+        
     def on_train_start(self):
         """Called by PytorchLightning automatically at the start of training"""
         GS.on_train_start(self=self, exp_name=self.exp_name, model_name=self.name, num_chns=1, nfft=self.target_stft.n_fft, model_class_path=self.import_path)

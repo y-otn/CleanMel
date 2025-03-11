@@ -1,20 +1,14 @@
 data:
-  class_path: data_loaders.SPencn_NSdns_RIR_real_dp.MelSPNetDataModule
+  class_path: data_loader.SPencn_NSdns_RIRreal.CleanMelDataModule
   init_args:
-    speech_dir: /nvmework3/shaonian/MelSpatialNet/Datasets/MambaFSNet/speech/HQ_en+cn/old_HQ/
-    noise_dir: ../Datasets/MambaFSNet/noise/
-    rir_dir: ../Datasets/MambaFSNet/rir/realRIR_rts/
+    speech_dir: YOUR_SPEECH_DIR
+    noise_dir: YOUR_NOISE_DIR
+    rir_dir: YOUR_RIR_DIR
     datasets: ['SimTrain', 'SimVal', 'SimTest', ['SimVal']]
-    target: direct_path
     audio_time_len: [4.0, 4.0, null]
     snr: [-5, 20]
     batch_size: [2, 1]
-    test_set: test
-    dataset_len: 
-    vocos_norm: true
-    asr_dir: "../Datasets/MambaFSNet/validation/et05_real_isolated_1ch_track/"
-    asr_tokenlist: "./configs/asr/token_list.yaml"
-    asr_nlsyms: "./configs/asr/nlsyms.txt"
+    dataset_len: [100000, 3000, 3000]
 
 model_checkpoint: # remove this if it cause any errors
   save_top_k: -1 # save every checkpoint for testing the performance on utterance/session0 and pick the best checkpoint for evaulating other sessions
