@@ -77,11 +77,12 @@ Vocos: `vocos_offline.pt` and `vocos_online.pt` are [here](https://drive.google.
 ```bibtex
 @misc{shao2025cleanmel,
     title={CleanMel: Mel-Spectrogram Enhancement for Improving Both Speech Quality and ASR}, 
-    author={Nian Shao et al.},
+    author={Nian Shao and Rui Zhou and Pengyu Wang and Xian Li and Ying Fang and Yujie Yang and Xiaofei Li},
     year={2025},
     eprint={2502.20040},
     archivePrefix={arXiv},
-    primaryClass={eess.AS}
+    primaryClass={eess.AS},
+    url={https://arxiv.org/abs/2502.20040}
 }
 ```
 
