@@ -28,9 +28,9 @@ pip install -r requirements.txt
 
 ### Inference
 ```bash 
-# Offline example (offline_CleanMel_L_mask)
+# Offline example (offline_CleanMel_S_mask)
 cd shell
-bash inference.sh 0, offline L map
+bash inference.sh 0, offline S mask
 
 # Online example (online_CleanMel_S_map)
 bash inference.sh 0, online S map
