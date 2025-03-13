@@ -13,8 +13,8 @@ PyTorch implementation of "CleanMel: Mel-Spectrogram Enhancement for Improving B
 ## Overview 🚀
 <p align="center"><img src="./src/imgs/cleanmel_arch.png"alt="jpg name" width="80%"/></p>
 
-CleanMel enhances logMel spectrograms for improved speech quality and ASR performance. Outputs compatible with:
-- 🎙️ Vocoders for waveform reconstruction
+**CleanMel** enhances logMel spectrograms for improved speech quality and ASR performance. Outputs compatible with:
+- 🎙️ Vocoders for enhanced waveforms
 - 🤖 ASR systems for transcription
 
 ## Quick Start ⚡
