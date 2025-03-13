@@ -7,13 +7,11 @@
 PyTorch implementation of "CleanMel: Mel-Spectrogram Enhancement for Improving Both Speech Quality and ASR".
 
 ## Notice 📢
-- Offline-CleanMel-S-map/mask and online-CleanMel-S-map checkpoints now available
+- `Offline-CleanMel-S-map/mask` and `online-CleanMel-S-map` checkpoints now available
 - Large models (`offline_CleanMel_L_*`) available via [cloud drive](https://drive.google.com/your-link-here)
 
 ## Overview 🚀
-<p align="center">
-  <img src="./src/imgs/cleanmel_arch.png" width="800" alt="CleanMel Architecture">
-</p>
+<center><img src="./src/imgs/cleanmel_arch.png"alt="jpg name" width="80%"/></center>
 
 CleanMel enhances logMel spectrograms for improved speech quality and ASR performance. Outputs compatible with:
 - 🎙️ Vocoders for waveform reconstruction
@@ -38,6 +36,7 @@ bash inference.sh 0, offline L map
 bash inference.sh 0, online S map
 ```
 **Custom Input**: Modify `speech_folder` in `inference.sh`
+
 **Output**: Results saved to `output_folder(default to ./my_output)`
 
 ### Training
@@ -68,6 +67,7 @@ Vocos: `vocos_offline.pt` and `vocos_online.pt` are [here](https://drive.google.
 ### Speech Enhancement
 <center><img src="./src/imgs/dnsmos_performance.png" alt="jpg name" width="70%"/></center>
 <center><img src="./src/imgs/pesq_performance.png" alt="jpg name" width="50%"/></center>
+
 ### ASR Accuracy
 <center><img src="./src/imgs/asr_performance.png" alt="jpg name" width="50%"/></center>
 💡 ASR implementation details in [`asr_infer` branch](https://github.com/Audio-WestlakeU/CleanMel/tree/asr_infer)
