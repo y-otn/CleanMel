@@ -62,7 +62,7 @@ class ISTFTHead(FourierHead):
         # phase = torch.atan2(y, x)
         # S = mag * torch.exp(phase * 1j)
         # better directly produce the complex value
-        if mag_recurrsive is not None: 
+        if mag_recurrsive is not None:
             if mag_recurrsive.dim() == 4:
                 mag_recurrsive = mag_recurrsive.squeeze(1)
             S = mag * (x + 1j * y) * mag_recurrsive

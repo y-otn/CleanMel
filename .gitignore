@@ -172,6 +172,8 @@ cython_debug/
 .pypirc
 
 # Pretrained checkpoints
-pretrained/
+pretrained/vocos/
 dataset/
 logs/
+configs/dataset/train_real.yaml
+my_output/
