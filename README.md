@@ -43,9 +43,11 @@ bash inference.sh 0, online S map
 ```bash
 # Offline training
 cd shell
-bash train.sh 0, offline L mask
+bash train.sh 0,1,2,3 offline L mask
 ```
 Configure datasets in `./config/dataset/train.yaml`
+
+Default 4 GPUs trained with batch size 32
 
 ## Pretrained Models 🧠
 ```bash
