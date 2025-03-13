@@ -70,6 +70,7 @@ Vocos: `vocos_offline.pt` and `vocos_online.pt` are [here](https://drive.google.
 
 ### ASR Accuracy
 <center><img src="./src/imgs/asr_performance.png" alt="jpg name" width="50%"/></center>
+
 💡 ASR implementation details in [`asr_infer` branch](https://github.com/Audio-WestlakeU/CleanMel/tree/asr_infer)
 
 ## Citation 📝
