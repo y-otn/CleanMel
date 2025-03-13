@@ -41,9 +41,9 @@ bash inference.sh 0, online S map
 
 ### Training
 ```bash
-# Offline training
+# Offline training example (offline_CleanMel_S_mask)
 cd shell
-bash train.sh 0,1,2,3 offline L mask
+bash train.sh 0,1,2,3 offline S mask
 ```
 Configure datasets in `./config/dataset/train.yaml`
 
