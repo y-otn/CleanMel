@@ -8,7 +8,7 @@ PyTorch implementation of "CleanMel: Mel-Spectrogram Enhancement for Improving B
 
 ## Notice 📢
 - `Offline-CleanMel-S-map/mask` and `online-CleanMel-S-map` checkpoints now available
-- Large models (`offline_CleanMel_L_*`) available via [cloud drive](https://drive.google.com/your-link-here)
+- Large models (`offline_CleanMel_L_*`) are coming soon
 
 ## Overview 🚀
 <center><img src="./src/imgs/cleanmel_arch.png"alt="jpg name" width="80%"/></center>
