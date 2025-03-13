@@ -5,20 +5,17 @@ Pytorch implementation of "CleanMel: Mel-Spectrogram Enhancement for Improving B
  **|** [Lab :hear_no_evil:](https://github.com/Audio-WestlakeU) **|** [Contact :kissing_heart:](https://saoyear.github.io)
 
 ## Noticement
-- [x] A quick inference demo is provided in `shell/inference.sh`.
-- [x] For the ASR inference codes, we released in the `asr_infer` branch.
-- [ ] This repo is under development and will be formally released ASAP.
-
+- The offline-CleanMel-S-map/mask and online-CleanMel-S-map checkpoints are available now.
 
 ## Introduction
 
+<p align="center">
+  <img src="./src/imgs/cleanmel_arch.png" width="800" />
+</p>
 
-## Getting Started
-**Step 1. Pretrained checkpoint:** 
+We introduce CleanMel, a Mel-spectrogram enhancement method which generates enhanced (denoise + dereverberation) logMel spectrograms. The output of CleanMel could be used for Vocoder or ASR systems to obtain enhanced waveforms or transcriptions.
 
-Download the [pretrained checkpoints](https://drive.google.com/file/d/13Q0995DmOLMQWP-8MkUUV9bJtUywBzCy/view?usp=drive_link) here (Google drive).
-
-**Step 2. Environment configurations:** 
+## Environment
 
 Create a new conda environment for CleanMel:
 
@@ -31,45 +28,92 @@ pip install -r requirements.txt
 ```
 <font color=gray> Hint: If you have any problem w.r.t. the environments. Please first make sure your `mamba_ssm`, `torch` and `pytorch-lightning` versions are identical to those in the `requirements.txt`.</font>
 
+
+## Pretrained checkpoints
+
+**Enhancement model**
+
+We provides the 3 pretrained checkpoints by default in `./pretrained/enhancement`:
+- offline_CleanMel_S_map
+- offline_CleanMel_S_mask
+- online_CleanMel_S_map
+
+offline_CleanMel_L_map and offline_CleanMel_L_mask will be uploaded via cloud drive since their large sizes.
+
+**Vocos Model**
+
+The pretrained offline/online vocos model checkpoints can be found [here](https://drive.google.com/file/d/13Q0995DmOLMQWP-8MkUUV9bJtUywBzCy/view?usp=drive_link). Please copy the downloaded vocos checkpoints to `./pretrained/vocos`.
+
+`./pretrained` **folder structure**
+
+The `pretrained` folder should be structured as follows:
+```
+pretrained
+├── enhancement
+|   ├── offline_CleanMel_S_map.ckpt
+|   ├── offline_CleanMel_S_mask.ckpt
+|   |── online_CleanMel_S_map.ckpt
+|   |── ...
+├── vocos
+|   ├── vocos_offline.pt
+|   |── vocos_online.pt
+```
+
+
 ## Inference
-**Change pretrained checkpoint path:**
 
-In `./shell/inference.sh`: 
-1. change the `model.arch_ckpt` to `YOUR_PATH/CleanMel_S_L1.ckpt` 
-2. change the `model.vocos_ckpt` to `YOUR_PATH/vocos_offline.pt`.
+The `inference.sh` in `./shell` folder provides script for model inference, the input arguments are (in order):
+1. `<GPU_ID>` : the GPU ID for inference;
+2. `<Mode>` : `online` or `offline`;
+3. `<Model size>` : `S` or `L`;
+4. `<Model output>` : `map` or `mask`.
 
----
-
-**Inference provided demos:** 
-
-Using the `inference.sh` in `shell` folder:
+E.g., to inference with `offline_CleanMel_S_map` on `GPU:0`:
 ```
 cd shell
-bash inference 0,
+bash inference 0, offline S map
 ```
 <font color=gray, size=1>Hint: the number behind indicates your GPU ID. `0,` means using only `GPU:0` for inference. And change it value to `0,1,...` to allow more `GPUS` for inference.</font>
 
----
+By default, the script would inference the noisy waveforms in `./src/demos/` and save the enhanced waveforms to `./my_output` folder. 
 
-**Inference your own file:** 
-
-In `inference.sh`:
-1. change `dataset.speech_dir` to your data path.
-2. change `model.output_path` to your output folder. 
-
-Run 
-```
-bash inference 0,
-```
-<font color=gray, size=1>Hint: You could also delete `model.output_path`, by default, the waveform will output to the same folder of your pretrained checkpoint.</font>
+To **inference with your own data**, please change the `speech_folder` argument in the script. To customize the output directory, please change the `output_folder` argument in the script. 
 
 ## Training
+To train with your own data, please modify the `./config/dataset/train.yaml` file, and change the `speech_dir`, `noise_dir` and `rir_dir` to your own data path.
+
+The `train.sh` in `./shell` folder provides script for model training, the input arguments are (in order):
+1. `<GPU_ID>` : the GPU ID for training;
+2. `<Mode>` : `online` or `offline`;    
+3. `<Model size>` : `S` or `L`;
+4. `<Model output>` : `map` or `mask`.
+
+E.g., to train with `offline_CleanMel_L_mask` on `GPU:0`:
+```
+cd shell
+bash train 0, offline L mask
+```
 
 ## Performance
 
 ### Speech enhancement performance
 
+The speech enhancement peroformance is evaluated by DNSMOS and PESQ on several datasets. The results are shown in the following:
+<p align="center">
+  <img src="./src/imgs/dnsmos_performance.png" width="800" />
+</p>
+
+<p align="center">
+  <img src="./src/imgs/pesq_performance.png" width="800" />
+</p>
+
 ### ASR performance
+We test CleanMel on 3 datasets: CHiME4, REVERB, RealMAN to evaluate its peroformance on English and Chinese ASR tasks. The results are shown in the following:
+<p align="center">
+  <img src="./src/imgs/asr_performance.png" width="800" />
+</p>
+
+Please check the [`asr_infer` branch](https://github.com/Audio-WestlakeU/CleanMel/tree/asr_infer) for the ASR inference details and implementations.
 
 ## Citation
 ```
