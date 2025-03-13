@@ -37,7 +37,7 @@ bash inference.sh 0, online S map
 ```
 **Custom Input**: Modify `speech_folder` in `inference.sh`
 
-**Output**: Results saved to `output_folder(default to ./my_output)`
+**Output**: Results saved to `output_folder` (default to `./my_output`)
 
 ### Training
 ```bash
@@ -59,9 +59,9 @@ pretrained/
     ├── vocos_offline.pt
     └── vocos_online.pt
 ```
-Enhancement: `offline_CleanMel_L_mask/map.ckpt` are coming soon.
+**Enhancement**: `offline_CleanMel_L_mask/map.ckpt` are coming soon.
 
-Vocos: `vocos_offline.pt` and `vocos_online.pt` are [here](https://drive.google.com/file/d/13Q0995DmOLMQWP-8MkUUV9bJtUywBzCy/view?usp=drive_link).
+**Vocos**: `vocos_offline.pt` and `vocos_online.pt` are [here](https://drive.google.com/file/d/13Q0995DmOLMQWP-8MkUUV9bJtUywBzCy/view?usp=drive_link).
 
 ## Performance 📊
 ### Speech Enhancement
