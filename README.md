@@ -62,6 +62,8 @@ pretrained
 
 ## Inference
 
+**Infernece with Pretrained Models**
+
 The `inference.sh` in `./shell` folder provides script for model inference, the input arguments are (in order):
 1. `<GPU_ID>` : the GPU ID for inference;
 2. `<Mode>` : `online` or `offline`;
@@ -74,6 +76,12 @@ cd shell
 bash inference 0, offline S map
 ```
 <font color=gray, size=1>Hint: the number behind indicates your GPU ID. `0,` means using only `GPU:0` for inference. And change it value to `0,1,...` to allow more `GPUS` for inference.</font>
+
+**Sanity Check** 
+
+To check if you are running CleanMel correctly, an inference example of `noisy_CHIME-real_F05_442C020S_STR_REAL.wav` is provided in `./src/inference_examples/` folder.
+
+**Customize Inference**
 
 By default, the script would inference the noisy waveforms in `./src/demos/` and save the enhanced waveforms to `./my_output` folder. 
 
@@ -127,3 +135,7 @@ Please check the [`asr_infer` branch](https://github.com/Audio-WestlakeU/CleanMe
     url={https://arxiv.org/abs/2502.20040}
 }
 ```
+
+## Reference
+
+The pytorch-lightning structure in this repository is referred from [NBSS](https://github.com/Audio-WestlakeU/NBSS).
