@@ -62,7 +62,7 @@ pretrained/
     ├── vocos_offline.pt
     └── vocos_online.pt
 ```
-**Enhancement**: `offline_CleanMel_L_mask/map.ckpt` are coming soon.
+**Enhancement**: `offline_CleanMel_S/L_mask/map.ckpt` are available.
 
 **Vocos**: `vocos_offline.pt` and `vocos_online.pt` are [here](https://drive.google.com/file/d/13Q0995DmOLMQWP-8MkUUV9bJtUywBzCy/view?usp=drive_link).
 
