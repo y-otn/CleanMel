@@ -27,7 +27,7 @@ warnings.filterwarnings("ignore", category=DeprecationWarning)
 
 class TrainModule(pl.LightningModule):
     name: str 
-    import_path: str = 'model.CleanMelTrainer_mapping.TrainModule'
+    import_path: str = 'model.CleanMelTrainer_mask.TrainModule'
 
     def __init__(
         self,
@@ -114,7 +114,7 @@ class TrainModule(pl.LightningModule):
         # Model Forward
         MRM_hat = self.arch(X, inference=inference)
         # Apply sigmoid for masking
-        MRM_hat = torch.sigmoid(MRM_hat)
+        MRM_hat = 1 - torch.sigmoid(MRM_hat)
         # Obtain MRM prediction/target
         MRM_target = self.get_mrm_target(y, x, X_norm)
         Y_hat = self.get_mrm_pred(MRM_hat, x, X_norm)
