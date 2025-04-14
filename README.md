@@ -7,8 +7,9 @@
 PyTorch implementation of "CleanMel: Mel-Spectrogram Enhancement for Improving Both Speech Quality and ASR".
 
 ## Notice 📢
-- `Offline-CleanMel-S-map/mask` and `online-CleanMel-S-map` checkpoints now available
-- Large models (`offline_CleanMel_L_*`) are coming soon
+- All models are available in `pretrained/enhancement/` folder.
+- The enhanced results from 4 `offline_CleanMel_S/L_mask/map` models for the CHIME example `noisy_CHIME-real_F05_442C020S_STR_REAL` are given in `src/inference_example/pretrained_example_output` folder.
+- To reproduce the results, make sure to use the our vocos models [here](https://drive.google.com/file/d/13Q0995DmOLMQWP-8MkUUV9bJtUywBzCy/view?usp=drive_link)!
 
 ## Overview 🚀
 <p align="center"><img src="./src/imgs/cleanmel_arch.png"alt="jpg name" width="60%"/></p>
