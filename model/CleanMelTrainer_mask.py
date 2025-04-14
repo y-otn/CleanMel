@@ -114,7 +114,7 @@ class TrainModule(pl.LightningModule):
         # Model Forward
         MRM_hat = self.arch(X, inference=inference)
         # Apply sigmoid for masking
-        MRM_hat = 1 - torch.sigmoid(MRM_hat)
+        MRM_hat = torch.sigmoid(MRM_hat)
         # Obtain MRM prediction/target
         MRM_target = self.get_mrm_target(y, x, X_norm)
         Y_hat = self.get_mrm_pred(MRM_hat, x, X_norm)
