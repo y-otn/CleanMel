@@ -132,7 +132,7 @@ class TrainModule(pl.LightningModule):
         self.log('train/mrm_loss', mrm_loss, batch_size=ys[0].shape[0], sync_dist=True, prog_bar=False)
         self.log('train/logmel_mse', logmel_mse, batch_size=ys[0].shape[0], sync_dist=True, prog_bar=False)
         self.log('train/logmel_L1', logmel_l1, batch_size=ys[0].shape[0], sync_dist=True, prog_bar=False)
-        return logmel_l1
+        return mrm_loss
 
     def validation_step(self, batch, batch_idx):
         """validation step on self.device, called automaticly by PytorchLightning"""
