@@ -6,7 +6,7 @@ __pycache__/
 dev_utils/
 # C extensions
 *.so
-
+.gradio
 # Distribution / packaging
 .Python
 build/
