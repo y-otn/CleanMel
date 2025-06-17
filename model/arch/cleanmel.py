@@ -345,7 +345,6 @@ if __name__ == '__main__':
     dur = len(noisy) / fs
     noisy, factor = customize_soxnorm(noisy, gain=-3)
     noisy = torch.tensor(noisy).unsqueeze(0).float().to("cuda")
-    torch.save(noisy, "/nvmework3/shaonian/MelSpatialNet/CleanMel/dev_utils/output_folder/prev_input.pt")
     # vocos norm
     x = stft(noisy)
     # Load the model

@@ -61,7 +61,6 @@ class InputSTFT(nn.Module):
         else:
             # vocos dBFS normalization
             x, x_norm = soxnorm(x, random.randint(-6, -1) if self.training else -3)
-            torch.save(x, "/nvmework3/shaonian/MelSpatialNet/CleanMel/dev_utils/output_folder/input.pt")
             x = self.stft(x)
             x = torch.view_as_real(x)
         return x , x_norm
