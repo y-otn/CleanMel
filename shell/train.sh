@@ -34,6 +34,7 @@ else
     exit 1
 fi
 
+
 python -m model.CleanMelTrainer_${output} fit \
     --config ./configs/model/cleanmel_${mode}.yaml \
     --config ./configs/dataset/train.yaml \

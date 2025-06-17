@@ -64,13 +64,25 @@ class TrainModule(pl.LightningModule):
             
         self.online = arch.online
         self.name = self.exp_name
-        
-        # Load pretrained models
+
+        # Load pretrained model
         # CleanMel
         if arch_ckpt is not None:
+            if "HF" in vocos_ckpt:
+                # Load pretrained model by HuggingFace Hub
+                from huggingface_hub import hf_hub_download
+                REPO_ID = "WestlakeAudioLab/CleanMel"
+                arch_id = arch_ckpt.split("!")[-1]
+                arch_ckpt = hf_hub_download(repo_id=REPO_ID, filename=arch_id)
             self.arch.load_state_dict(torch.load(arch_ckpt, map_location='cpu'), strict=True)
         # Vocos
         if vocos_config is not None:
+            if "HF" in vocos_ckpt:
+                # Load pretrained model by HuggingFace Hub
+                from huggingface_hub import hf_hub_download
+                REPO_ID = "WestlakeAudioLab/CleanMel"
+                vocos_id = vocos_ckpt.split("!")[-1]
+                vocos_ckpt = hf_hub_download(repo_id=REPO_ID, filename=vocos_id)
             if self.online:
                 from model.vocos.online.pretrained import Vocos
             else:

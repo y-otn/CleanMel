@@ -1,9 +1,9 @@
 data:
   class_path: data_loader.SPencn_NSdns_RIRreal.CleanMelDataModule
   init_args:
-    speech_dir: YOUR_SPEECH_DIR
-    noise_dir: YOUR_NOISE_DIR
-    rir_dir: YOUR_RIR_DIR
+    speech_dir: YOUR_SPEECH_DIR/
+    noise_dir: YOUR_NOISE_DIR/
+    rir_dir: YOUR_RIR_DIR/
     datasets: ['SimTrain', 'SimVal', 'SimTest', ['SimVal']]
     audio_time_len: [4.0, 4.0, null]
     snr: [-5, 20]

@@ -173,6 +173,7 @@ cython_debug/
 
 # Pretrained checkpoints
 pretrained/vocos/
+pretrained/enhancement/
 dataset/
 logs/
 configs/dataset/train_real.yaml

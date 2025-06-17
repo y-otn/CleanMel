@@ -7,9 +7,9 @@
 PyTorch implementation of "CleanMel: Mel-Spectrogram Enhancement for Improving Both Speech Quality and ASR".
 
 ## Notice 📢
+- The CleanMel model checkpoints are now available on huggingface, the inference can be done using one-line commands.
 - All models are available in `pretrained/enhancement/` folder.
 - The enhanced results from 4 `offline_CleanMel_S/L_mask/map` models for the CHIME example `noisy_CHIME-real_F05_442C020S_STR_REAL` are given in `src/inference_example/pretrained_example_output` folder.
-- To reproduce the results, make sure to use the our vocos models [here](https://drive.google.com/file/d/13Q0995DmOLMQWP-8MkUUV9bJtUywBzCy/view?usp=drive_link)!
 
 ## Overview 🚀
 <p align="center"><img src="./src/imgs/cleanmel_arch.png"alt="jpg name" width="60%"/></p>
@@ -28,12 +28,22 @@ pip install -r requirements.txt
 ```
 
 ### Inference
+Pretrained models can be downloaded manually [here](https://huggingface.co/WestlakeAudioLab/CleanMel), or automatically with the help of `huggingface-hub` package.
+
 ```bash 
-# Offline example (offline_CleanMel_S_mask)
+# Inference with pretrained models from huggingface
+## Offline example (offline_CleanMel_S_mask)
+cd shell
+bash inference.sh 0, offline S mask huggingface
+
+## Online example (online_CleanMel_S_map)
+bash inference.sh 0, online S map huggingface
+
+# Inference with local pretrained models
 cd shell
 bash inference.sh 0, offline S mask
 
-# Online example (online_CleanMel_S_map)
+## Online example (online_CleanMel_S_map)
 bash inference.sh 0, online S map
 ```
 **Custom Input**: Modify `speech_folder` in `inference.sh`

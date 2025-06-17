@@ -4,6 +4,7 @@ gpus=$1
 mode=$2
 size=$3
 output=$4
+huggingface_used=$5
 
 speech_folder="./src/demos/"
 output_folder="./my_output/"
@@ -34,11 +35,20 @@ else
     exit 1
 fi
 
+# huggingface_used
+if [[ $huggingface_used == "huggingface" ]]; then
+    vocos_ckpt=HF!ckpts/Vocos/vocos_${mode}.pt
+else
+    vocos_ckpt=./pretrained/vocos/vocos_${mode}.pt
+fi
+
 python -m model.CleanMelTrainer_${output} test \
     --config ./configs/model/cleanmel_${mode}.yaml \
     --config ./configs/dataset/test.yaml \
     --model.arch.init_args.n_layers=${n_layers} \
     --model.arch.init_args.dim_hidden=${dim_hidden} \
+    --model.vocos_ckpt ${vocos_ckpt} \
+    --model.vocos_config ./configs/model/vocos_${mode}.yaml \
     --trainer.devices=${gpus} \
     --data.batch_size=[8,20] \
     --data.dataset_len=[100000,3000,3000] \
