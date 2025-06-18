@@ -1,6 +1,7 @@
 # CleanMel
 [![Paper](https://img.shields.io/badge/arXiv-Paper-<COLOR>.svg)](https://arxiv.org/abs/2502.20040)
 [![Demos](https://img.shields.io/badge/🎧-Demos-blue)](https://audio.westlake.edu.cn/Research/CleanMel.html)
+[![Try CleanMel](https://img.shields.io/badge/Open%20Demo-Click%20Here-blue)](https://huggingface.co/spaces/SaoYear/CleanMel)
 [![GitHub Issues](https://img.shields.io/github/issues/Audio-WestlakeU/CleanMel)](https://github.com/Audio-WestlakeU/CleanMel/issues)
 [![Contact](https://img.shields.io/badge/💌-Contact-purple)](https://saoyear.github.io)
 
@@ -17,6 +18,15 @@ PyTorch implementation of "CleanMel: Mel-Spectrogram Enhancement for Improving B
 **CleanMel** enhances logMel spectrograms for improved speech quality and ASR performance. Outputs compatible with:
 - 🎙️ Vocoders for enhanced waveforms
 - 🤖 ASR systems for transcription
+
+## Demo Page 🎤
+The demo page of CleanMel is published on [Hugging Face Spaces](https://huggingface.co/spaces/SaoYear/CleanMel).
+
+If you downloaded the pretrained models (follwing [instrctions](https://github.com/Audio-WestlakeU/CleanMel/tree/main/pretrained)), you can also activate this demo page locally by running the following command:
+```bash
+python app.py
+```
+Then, open your browser and visit `http://localhost:7860` to access the demo page.
 
 ## Quick Start ⚡
 
