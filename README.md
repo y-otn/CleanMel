@@ -22,7 +22,7 @@ PyTorch implementation of "CleanMel: Mel-Spectrogram Enhancement for Improving B
 ## Demo Page 🎤
 The demo page of CleanMel is published on [Hugging Face Spaces](https://huggingface.co/spaces/SaoYear/CleanMel).
 
-If you downloaded the pretrained models (follwing [instrctions](https://github.com/Audio-WestlakeU/CleanMel/tree/main/pretrained)), you can also activate this demo page locally by running the following command:
+If you downloaded the pretrained models (follwing [instructions](https://github.com/Audio-WestlakeU/CleanMel/tree/main/pretrained)), you can also activate this demo page locally by running the following command:
 ```bash
 python app.py
 ```
