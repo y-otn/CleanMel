@@ -5,7 +5,7 @@
 [![GitHub Issues](https://img.shields.io/github/issues/Audio-WestlakeU/CleanMel)](https://github.com/Audio-WestlakeU/CleanMel/issues)
 [![Contact](https://img.shields.io/badge/💌-Contact-purple)](https://saoyear.github.io)
 
-PyTorch implementation of "CleanMel: Mel-Spectrogram Enhancement for Improving Both Speech Quality and ASR".
+PyTorch implementation of "CleanMel: Mel-Spectrogram Enhancement for Improving Both Speech Quality and ASR" (accepted by IEEE Trans. ASLPRO, 2025).
 
 ## Notice 📢
 - The CleanMel model checkpoints are now available on huggingface, the inference can be done using one-line commands.
