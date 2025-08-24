@@ -27,3 +27,4 @@ spaces==0.37.1
 pydantic==2.10.6
 jsonargparse[signatures]==4.28.0
 tensorboard==2.20.0
+rich==14.0.0
